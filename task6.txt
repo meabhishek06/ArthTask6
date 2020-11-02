@@ -1,0 +1,20 @@
+aws ec2 create-key-pair --key-name ArthCLI --query KeyMaterial --output text > ArthCLI.pem
+
+aws ec2 create-security-group --group-name Arthsg --description "Abhishek security group" --vpc-id vpc-eb9ac183
+
+>aws ec2 authorize-security-group-ingress --group-id sg-07809302dca4b2883 --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+aws ec2 authorize-security-group-ingress --group-id sg-07809302dca4b2883 --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+aws ec2 run-instances --image-id ami-052c08d70def0ac62 --count 1 --instance-type t2.micro --key-name ArthCLI --security-group-ids sg-07809302dca4b2883
+
+>aws ec2 create-volume --availability-zone ap-south-1a --size 1
+
+ ec2 attach-volume --device xvdb --instance-id i-07f7743447a8fdf80 --volume-id vol-0776cba66f31a56e8
+
+aws s3 mb s3://abhi1221
+
+aws s3 cp banner-home.jpg s3://abhi1221  --acl public-read 
+
+aws cloudfront create-distribution --origin-domain-name abhi1221.s3.amazonaws.com
+
